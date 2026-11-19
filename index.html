@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#1e1e1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PIXEL TIMER">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>PIXEL TIMER</title>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="logo"><span class="blk b1"></span><span class="blk b2"></span><span class="blk b3"></span> PIXEL TIMER</div>
+  </header>
+
+  <main>
+    <!-- TIMER -->
+    <section id="view-timer" class="view active">
+      <div class="panel">
+        <label class="lbl">PROJECT</label>
+        <select id="projectSelect" class="px-input"></select>
+        <input id="memoInput" class="px-input" type="text" placeholder="MEMO (任意)" maxlength="60">
+      </div>
+
+      <div class="panel clock-panel">
+        <div id="clock" class="clock idle">00:00</div>
+        <div id="clockSub" class="clock-sub">READY</div>
+        <div id="stack" class="stack" aria-hidden="true"></div>
+      </div>
+
+      <button id="toggleBtn" class="px-btn big start">▶ START</button>
+
+      <div class="panel stats">
+        <div class="stat"><span class="k">TODAY</span><span id="sToday" class="v">0m</span></div>
+        <div class="stat"><span class="k">WEEK</span><span id="sWeek" class="v">0m</span></div>
+        <div class="stat"><span class="k">MONTH</span><span id="sMonth" class="v">0m</span></div>
+        <div class="stat wide"><span class="k">MONTH ¥</span><span id="sYen" class="v">¥0</span></div>
+      </div>
+    </section>
+
+    <!-- LOG -->
+    <section id="view-log" class="view">
+      <div class="row-between">
+        <h2>LOG</h2>
+        <button id="addManualBtn" class="px-btn small">＋ 手動追加</button>
+      </div>
+      <div id="logList"></div>
+    </section>
+
+    <!-- SUM -->
+    <section id="view-sum" class="view">
+      <div class="row-between">
+        <button id="prevMonth" class="px-btn small">◀</button>
+        <h2 id="sumTitle">2026/11</h2>
+        <button id="nextMonth" class="px-btn small">▶</button>
+      </div>
+      <div class="panel stats">
+        <div class="stat"><span class="k">TOTAL</span><span id="mTotal" class="v">0h 0m</span></div>
+        <div class="stat"><span class="k">EARN</span><span id="mYen" class="v">¥0</span></div>
+      </div>
+      <h3>BY PROJECT</h3>
+      <div id="sumByProject"></div>
+      <h3>BY DAY</h3>
+      <div id="sumByDay" class="bars"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-set" class="view">
+      <h2>SETTINGS</h2>
+      <h3>PROJECTS</h3>
+      <div id="projectList"></div>
+      <button id="addProjectBtn" class="px-btn small">＋ 案件を追加</button>
+
+      <h3>OPTIONS</h3>
+      <label class="check"><input type="checkbox" id="optSound"> <span>効果音 (SOUND)</span></label>
+      <label class="lbl" style="margin-top:12px">ROUND (分の丸め)</label>
+      <select id="optRound" class="px-input">
+        <option value="floor">切り捨て</option>
+        <option value="round">四捨五入</option>
+        <option value="ceil">切り上げ</option>
+      </select>
+
+      <h3>BACKUP</h3>
+      <div class="btn-grid">
+        <button id="exportCsv" class="px-btn small">CSV出力</button>
+        <button id="exportJson" class="px-btn small">JSON出力</button>
+        <button id="importJson" class="px-btn small">JSON読込</button>
+      </div>
+      <input id="importFile" type="file" accept="application/json,.json" hidden>
+      <p class="note">データはこの端末内に保存されます。定期的にバックアップしてください。必ずホーム画面のアイコンから起動して使ってください。</p>
+      <button id="resetBtn" class="px-btn small danger">全データ削除</button>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-view="timer">TIMER</button>
+    <button class="tab" data-view="log">LOG</button>
+    <button class="tab" data-view="sum">SUM</button>
+    <button class="tab" data-view="set">SET</button>
+  </nav>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal" hidden>
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div class="btn-grid" id="modalBtns"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
