@@ -228,6 +228,14 @@ $("#nextMonth").addEventListener("click", () => { sumM++; if (sumM > 11) { sumM 
 function renderSettings() {
   $("#projectList").innerHTML = S.projects.map((p) => `<div class="item" data-id="${p.id}"><div class="l"><span class="chip" style="background:${p.color}"></span><div class="t"><div class="t1">${esc(p.name)}</div><div class="t2">${p.rate ? "¥" + p.rate.toLocaleString("ja-JP") + "/h" : "時給未設定"}</div></div></div><div class="r">✎</div></div>`).join("");
   $("#projectList").querySelectorAll(".item").forEach((el) => el.addEventListener("click", () => editProject(el.dataset.id)));
+  try {
+    const t = document.createElement("div");
+    t.style.cssText = "position:fixed;visibility:hidden;padding-bottom:env(safe-area-inset-bottom,0px);padding-top:env(safe-area-inset-top,0px)";
+    document.body.appendChild(t);
+    const cs = getComputedStyle(t);
+    $("#debugInfo").textContent = `win ${innerWidth}x${innerHeight} / screen ${screen.width}x${screen.height} / safe top ${cs.paddingTop} bottom ${cs.paddingBottom} / standalone ${navigator.standalone === true}`;
+    t.remove();
+  } catch (e) {}
   $("#optSound").checked = S.opts.sound;
   $("#optRound").value = S.opts.round;
 }
@@ -299,19 +307,6 @@ $("#resetBtn").addEventListener("click", () => {
   if (!confirm("本当に削除しますか?(元に戻せません)")) return;
   localStorage.removeItem(KEY); load(); renderProjectSelect(); showView("timer");
 });
-
-/* ---------- fit to full screen (iOSホーム画面アプリで下が短く切れる対策) ---------- */
-function fitScreen() {
-  const app = $("#app");
-  const standalone = window.navigator.standalone === true || matchMedia("(display-mode: standalone)").matches;
-  if (!standalone) { app.style.height = ""; return; }
-  const full = Math.max(window.screen.height, window.screen.width); // 縦向き固定のため長辺=高さ
-  app.style.height = Math.max(full, window.innerHeight) + "px";
-}
-fitScreen();
-window.addEventListener("resize", fitScreen);
-window.addEventListener("orientationchange", () => setTimeout(fitScreen, 200));
-window.addEventListener("pageshow", fitScreen);
 
 /* ---------- boot ---------- */
 renderProjectSelect(); renderTimer();
