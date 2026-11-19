@@ -1,4 +1,4 @@
-const CACHE = "pixel-timer-v2";
+const CACHE = "pixel-timer-v3";
 const FILES = [
   "./", "index.html", "style.css", "app.js", "manifest.json",
   "fonts/dotgothic16-latin-400-normal.woff2", "fonts/dotgothic16-japanese-400-normal.woff2",

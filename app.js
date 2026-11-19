@@ -91,16 +91,12 @@ function renderTimer() {
     clock.className = "clock run";
     $("#clockSub").textContent = `${hm(S.running.start)} ～ 作業中 / ${proj(S.running.projectId).name}`;
     btn.textContent = "■ STOP"; btn.className = "px-btn big stop";
-    const n = Math.min(36, Math.floor(m / 10));
-    const st = $("#stack");
-    if (st.childElementCount !== n) {
-      st.innerHTML = Array.from({ length: n }, (_, i) => `<i style="background:${COLORS[i % 5]}"></i>`).join("");
-    }
+    setStack(Math.floor(m / 10));
   } else {
     clock.textContent = "00:00:00"; clock.className = "clock idle";
     $("#clockSub").textContent = "READY";
     btn.textContent = "▶ START"; btn.className = "px-btn big start";
-    $("#stack").innerHTML = "";
+    setStack(0);
   }
   const now = Date.now(), all = allEntries();
   const d0 = new Date(); d0.setHours(0, 0, 0, 0);
@@ -112,6 +108,14 @@ function renderTimer() {
   const mo = sumFor(inRange(m0));
   $("#sMonth").textContent = fmtDur(mo.min);
   $("#sYen").textContent = fmtYen(mo.yen);
+}
+function setStack(n10) {
+  // 10分ごとに1ブロック。12ブロック(2時間)で一周
+  const on = n10 === 0 ? 0 : ((n10 - 1) % 12) + 1;
+  const st = $("#stack");
+  if (st.dataset.on === String(on) && st.childElementCount) return;
+  st.dataset.on = on;
+  st.innerHTML = Array.from({ length: 12 }, (_, i) => i < on ? `<i class="on" style="background:${COLORS[i % 5]}"></i>` : "<i></i>").join("");
 }
 function toggle() {
   if (S.running) {
