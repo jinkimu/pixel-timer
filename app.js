@@ -300,6 +300,19 @@ $("#resetBtn").addEventListener("click", () => {
   localStorage.removeItem(KEY); load(); renderProjectSelect(); showView("timer");
 });
 
+/* ---------- fit to full screen (iOSホーム画面アプリで下が短く切れる対策) ---------- */
+function fitScreen() {
+  const app = $("#app");
+  const standalone = window.navigator.standalone === true || matchMedia("(display-mode: standalone)").matches;
+  if (!standalone) { app.style.height = ""; return; }
+  const full = Math.max(window.screen.height, window.screen.width); // 縦向き固定のため長辺=高さ
+  app.style.height = Math.max(full, window.innerHeight) + "px";
+}
+fitScreen();
+window.addEventListener("resize", fitScreen);
+window.addEventListener("orientationchange", () => setTimeout(fitScreen, 200));
+window.addEventListener("pageshow", fitScreen);
+
 /* ---------- boot ---------- */
 renderProjectSelect(); renderTimer();
 if (S.running) $("#memoInput").value = S.running.memo || "";

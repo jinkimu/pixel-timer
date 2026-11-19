@@ -9,7 +9,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"DotGothic16",monospace;font-size:16px;
   -webkit-font-smoothing:none;font-smooth:never;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
-#app{position:fixed;top:0;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;display:flex;flex-direction:column;padding-top:var(--safe-t);
+#app{position:fixed;top:0;bottom:0;left:0;right:0;height:100lvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;padding-top:var(--safe-t);
   background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 2px,transparent 2px 4px)}
 .top{padding:6px 16px 6px}
 .logo{font-size:20px;letter-spacing:2px;display:flex;align-items:center;gap:4px}
@@ -81,6 +81,7 @@ select.px-input{background-image:linear-gradient(45deg,transparent 50%,#fff 50%)
 .btn-grid{display:flex;gap:10px;flex-wrap:wrap}
 
 .tabbar{flex:none;display:grid;grid-template-columns:repeat(4,1fr);border-top:3px solid var(--fg);background:#161616;padding-bottom:max(var(--safe-b),8px)}
+@media (display-mode: standalone){#app{bottom:auto}}
 .tab{background:none;border:0;color:var(--dim);font:inherit;font-size:15px;padding:16px 0;letter-spacing:2px}
 .tab.active{color:#000;background:var(--yellow)}
 
