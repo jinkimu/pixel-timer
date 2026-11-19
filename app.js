@@ -86,8 +86,8 @@ function renderTimer() {
   const btn = $("#toggleBtn"), clock = $("#clock");
   if (S.running) {
     const ms = Date.now() - S.running.start;
-    const m = Math.floor(ms / 60000);
-    clock.innerHTML = `${pad(Math.floor(m / 60))}<span class="colon">:</span>${pad(m % 60)}`;
+    const m = Math.floor(ms / 60000), sec = Math.floor(ms / 1000) % 60;
+    clock.innerHTML = `${pad(Math.floor(m / 60))}<span class="colon">:</span>${pad(m % 60)}<span class="colon">:</span>${pad(sec)}`;
     clock.className = "clock run";
     $("#clockSub").textContent = `${hm(S.running.start)} ～ 作業中 / ${proj(S.running.projectId).name}`;
     btn.textContent = "■ STOP"; btn.className = "px-btn big stop";
@@ -97,7 +97,7 @@ function renderTimer() {
       st.innerHTML = Array.from({ length: n }, (_, i) => `<i style="background:${COLORS[i % 5]}"></i>`).join("");
     }
   } else {
-    clock.textContent = "00:00"; clock.className = "clock idle";
+    clock.textContent = "00:00:00"; clock.className = "clock idle";
     $("#clockSub").textContent = "READY";
     btn.textContent = "▶ START"; btn.className = "px-btn big start";
     $("#stack").innerHTML = "";

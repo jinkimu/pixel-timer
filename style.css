@@ -41,7 +41,7 @@ select.px-input{background-image:linear-gradient(45deg,transparent 50%,#fff 50%)
 .px-btn.ghost{background:var(--panel);color:#fff}
 
 .clock-panel{text-align:center;padding:20px 12px 14px}
-.clock{font-size:64px;letter-spacing:4px;line-height:1}
+.clock{font-size:clamp(36px,12.5vw,60px);letter-spacing:2px;line-height:1;white-space:nowrap}
 .clock.idle{color:var(--dim)}
 .clock.run{color:var(--fg)}
 .clock.run .colon{animation:blink 1s steps(1) infinite}
